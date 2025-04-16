@@ -1,5 +1,10 @@
 import requests
 import json
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def get_cep(cep: str):
     try:
@@ -18,12 +23,13 @@ def get_cep(cep: str):
 
 
 def get_temp(city: str):
-    try:
-        params = [
-            f'q={city}',
-            'appid=5796abbde9106b7da4febfae8c44c232',
-            'units=metric'
-        ]
+    key = str(os.getenv('API_KEY'))
+    params = [
+        f'q={city}',
+        f'appid={key}',
+        'units=metric'
+    ]
+    
         
         formatted_params = '&'.join(params)
         

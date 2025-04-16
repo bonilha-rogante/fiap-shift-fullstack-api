@@ -3,16 +3,22 @@
 # - Consumir a API OpenWeatherMap
 # - Criar um app para exibir a temperatura
 # 'https://api.openweathermap.org/data/2.5/find?q={cidade}&appid=5796abbde9106b7da4febfae8c44c232&units=metric'
-# https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+
 
 
 import requests
 import json
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def temperature(cidade):
+    key = str(os.getenv('API_KEY'))
     params = [
         f'q={cidade}',
-        'appid=5796abbde9106b7da4febfae8c44c232',
+        f'appid={key}',
         'units=metric'
     ]
     
