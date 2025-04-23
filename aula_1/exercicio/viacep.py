@@ -29,28 +29,25 @@ def get_temp(city: str):
         f'appid={key}',
         'units=metric'
     ]
+        
+    formatted_params = '&'.join(params)
+        
+    response = requests.get(f'https://api.openweathermap.org/data/2.5/find?{formatted_params}',
+        timeout=30,
+        )
     
-        
-        formatted_params = '&'.join(params)
-        
-        response = requests.get(f'https://api.openweathermap.org/data/2.5/find?{formatted_params}',
-            timeout=30,
-            )
-        
-        if response.status_code != 200:
-            raise RuntimeError(f'Status code não esperado: {response.status_code}')
-        
-        response_data = response.json()
-        
-        forecast_list = response_data.get('list', [])
-        
-        if len(forecast_list) == 0:
-            return None
-        
-        return forecast_list[0]
+    if response.status_code != 200:
+        raise RuntimeError(f'Status code não esperado: {response.status_code}')
     
-    except Exception as e:
-        print(f'Error: {e}')
+    response_data = response.json()
+    
+    forecast_list = response_data.get('list', [])
+    
+    if len(forecast_list) == 0:
+        return None
+    
+    return forecast_list[0]
+    
 
 def main():
     cep = input(f'Digite seu CEP sem hífen "-": ')
